@@ -15,7 +15,8 @@ add_action('init', function(){//wordpress is fully loaded but has not sent any h
 	wp_unschedule_event($time, 'kd_cron_hook');
 	
 	if(!wp_next_scheduled('kd_cron_hook')){//if there is no other cron job scheduled
-		wp_schedule_event(time(), 'two-minutes', 'kd_cron_hook', (array)$args)	;
+		//wp_schedule_event(time(), 'two-minutes', 'kd_cron_hook', (array)$args);
+		wp_schedule_single_event(time()+3600, 'kd_cron_hook');
 	}
 });
 
