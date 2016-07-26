@@ -22,9 +22,25 @@ add_action('init', function(){//wordpress is fully loaded but has not sent any h
 add_action('admin_menu', function(){
 	add_options_page('Cron Settings', 'Cron Settings', 'manage_options', 'kd-cron', function(){
 	//theme with manage options enabled can access this menu
+	$cron = _get_cron_array();
+	$schedules = wp_get_schedules();
 	?>
     <div class="wrap">
     	<h2>Cron Events Scheduled</h2>
+        <pre>
+        <?php print_r($schedules); ?>
+        </pre>
+        <?php
+		foreach($cron as $time=>$hook){
+			echo "<h3>$time</h3>";
+			print_r($hook);
+		}
+		?>
+        <?php 
+		foreach($schedules as $name){
+			echo '<h3>'.$name['display'].' : '.$name['interval'].'</h3>';
+		}
+		?>
     </div>
     <?php	
 	});
@@ -41,6 +57,11 @@ add_filter('cron_schedules', function($schedules){
 		'interval'=>120,
 		'display'=>'Every Two Minutes'
 	);
+	
+	$schedules['ten-minutes'] = array(
+		'interval'=>600,
+		'display'=>'Every Ten Minutes'
+	);	
 	return $schedules;
 });
 ?>
