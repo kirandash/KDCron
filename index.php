@@ -19,6 +19,17 @@ add_action('init', function(){//wordpress is fully loaded but has not sent any h
 	}
 });
 
+add_action('admin_menu', function(){
+	add_options_page('Cron Settings', 'Cron Settings', 'manage_options', 'kd-cron', function(){
+	//theme with manage options enabled can access this menu
+	?>
+    <div class="wrap">
+    	<h2>Cron Events Scheduled</h2>
+    </div>
+    <?php	
+	});
+});
+
 add_action('kd_cron_hook', function(){
 	$str = time();
 	wp_mail('kiran@xhtmlchamps.com', 'Scheduled with WP_Cron!', "This email was sent at $str.");
